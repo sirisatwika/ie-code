@@ -78,6 +78,14 @@ def getdeviceprofilelist():
         response = requests.get(apiurl)
         return response.json()
     except Exception as e:
+        return 
+
+@app.route('/api/v1/gatewayui')
+def getgatewayui():
+    try:
+        apiurl = "http://<ip of gateway>:4000"
+        return apiurl
+    except Exception as e:
         return e
   
 if __name__ == '__main__':
