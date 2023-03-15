@@ -47,7 +47,7 @@ def getgatewaycount():
     try:
         apiurl = "http://localhost:59881/api/v2/device/all"
         response = requests.get(apiurl)
-        gatewaycount = len(response.json())
+        gatewaycount = response.json['totalCount']
         return str(gatewaycount)
     except Exception as e:
         return e
@@ -57,8 +57,8 @@ def getdevicecount():
     try:
         apiurl = "http://<ip of gateway>:59881/api/v2/device/all"
         response = requests.get(apiurl)
-        gatewaycount = len(response.json())
-        return str(gatewaycount)
+        devicecount = response.json()['totalCount']
+        return str(devicecount)
     except Exception as e:
         return e
 
