@@ -47,7 +47,7 @@ def getgatewaycount():
     try:
         apiurl = "http://localhost:59881/api/v2/device/all"
         response = requests.get(apiurl)
-        gatewaycount = response.json['totalCount']
+        gatewaycount = response.json()['totalCount']
         return str(gatewaycount)
     except Exception as e:
         return e
@@ -62,7 +62,7 @@ def getdevicecount():
     except Exception as e:
         return e
 
-@app.route('/api/v1/gatewayprofiles')
+@app.route('/api/v1/gateway/profiles')
 def getgatewayprofilelist():
     try:
         apiurl = "http://localhost:59881/api/v2/deviceprofile/all"
@@ -71,22 +71,40 @@ def getgatewayprofilelist():
     except Exception as e:
         return e
 
-@app.route('/api/v1/deviceprofiles')
+@app.route('/api/v1/device/profiles')
 def getdeviceprofilelist():
     try:
         apiurl = "http://<ip of gateway>:59881/api/v2/deviceprofile/all"
         response = requests.get(apiurl)
         return response.json()
     except Exception as e:
-        return 
+        return e
+        
+@app.route('/api/v1/gateway/services')
+def getgatewaydeviceservicelist():
+    try:
+        apiurl = "http://localhost:59881/api/v2/deviceservice/all"
+        response = requests.get(apiurl)
+        return response.json()
+    except Exception as e:
+        return e
 
-@app.route('/api/v1/gatewayui')
+@app.route('/api/v1/device/services')
+def getdevicedeviceservicelist():
+    try:
+        apiurl = "http://<ip of gateway>:59881/api/v2/deviceservices/all"
+        response = requests.get(apiurl)
+        return response.json()
+    except Exception as e:
+        return e
+
+@app.route('/api/v1/gateway/ui')
 def getgatewayui():
     try:
-        apiurl = "http://<ip of gateway>:4000"
+        apiurl = "http://localhost:4000"
         return apiurl
     except Exception as e:
         return e
-  
+          
 if __name__ == '__main__':
     app.run('0.0.0.0',5000,debug = True)
