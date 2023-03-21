@@ -70,12 +70,30 @@ def createX509():
     
     DEVICE_KEY_FILE = "device_private.key"
     DEVICE_CERT_FILE = "device_cert.crt"
+    DEVICE_PEM_CERT = "device_cert.pem"
+    DEVICE_PEM_KEY = "device_key.pem"
+    
+    # Create the PEM-formatted certificate string
+    device_cert_pem = "-----BEGIN CERTIFICATE-----\n"
+    device_cert_pem += device_cert_str
+    device_cert_pem += "\n-----END CERTIFICATE-----"
+    
+    # Create the PEM-formatted key string
+    device_key_pem = "-----BEGIN KEY-----\n"
+    device_key_pem += device_key_str
+    device_key_pem += "\n-----END KEY-----"
 
     #Load the device cert and private key files
     with open(DEVICE_CERT_FILE, "wt") as f:
         f.write(OpenSSL.crypto.dump_certificate(OpenSSL.crypto.FILETYPE_PEM, device_cert).decode("utf-8"))
     with open(DEVICE_KEY_FILE, "wt") as f:
         f.write(OpenSSL.crypto.dump_privatekey(OpenSSL.crypto.FILETYPE_PEM, device_key).decode("utf-8"))
+        
+    #Load the device cert and private key files in PEM
+    with open(DEVICE_PEM_CERT, "wt") as f:
+        f.write(device_cert_pem)
+    with open(DEVICE_PEM_KEY, "wt") as f:
+        f.write(device_key_pem)
 
 
 def createSecretsDir(spath):
@@ -87,3 +105,5 @@ def createSecretsDir(spath):
         if not isExist:
                 # Create a new directory because it does not exist
                 os.makedirs(path)
+                
+                os.chdir(path)
